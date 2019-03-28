@@ -3,7 +3,8 @@ import sys
 import click
 
 
-CONTEXT_SETTINGS = dict(auto_envvar_prefix='Trello2Kanboard')
+CONTEXT_SETTINGS = dict(auto_envvar_prefix='Trello2Kanboard',
+                        help_option_names=['-h', '--help'])
 
 
 class Context(object):
