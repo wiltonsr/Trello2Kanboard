@@ -33,7 +33,7 @@ cmd_folder = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                           'commands'))
 
 
-class ComplexCLI(click.MultiCommand):
+class Trello2KanboardCLI(click.MultiCommand):
 
     def list_commands(self, ctx):
         rv = []
@@ -64,7 +64,7 @@ def print_version(ctx, param, value):
     ctx.exit()
 
 
-@click.command(cls=ComplexCLI, context_settings=CONTEXT_SETTINGS)
+@click.command(cls=Trello2KanboardCLI, context_settings=CONTEXT_SETTINGS)
 @click.option('--json-file', '-j', required=True, type=click.File('rb'),
               help='Trello JSON file.')
 @click.option('--version', '-v', is_flag=True, callback=print_version,
