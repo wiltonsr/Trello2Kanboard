@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import json
 import sys
@@ -13,19 +14,7 @@ CONTEXT_SETTINGS = dict(auto_envvar_prefix='Trello2Kanboard',
 class Context(object):
 
     def __init__(self):
-        self.verbose = False
-        self.home = os.getcwd()
-
-    def log(self, msg, *args):
-        """Logs a message to stderr."""
-        if args:
-            msg %= args
-        click.echo(msg, file=sys.stderr)
-
-    def vlog(self, msg, *args):
-        """Logs a message to stderr only if verbose is enabled."""
-        if self.verbose:
-            self.log(msg, *args)
+        pass
 
 
 pass_context = click.make_pass_decorator(Context, ensure=True)

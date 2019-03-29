@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import click
 import json
 from trello2kanboard.cli import pass_context
