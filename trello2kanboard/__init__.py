@@ -6,4 +6,4 @@ Click is a simple Python module for importing Trello projects from JSON files
 using the Kanboard API.
 :license: MIT, see LICENSE for more details.
 """
-__version__ = '0.2'
+__version__ = '0.3'
