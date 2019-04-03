@@ -25,6 +25,7 @@ setup(
     install_requires=[
         'click',
         'kanboard',
+        'python-dateutil'
     ],
     entry_points='''
         [console_scripts]
