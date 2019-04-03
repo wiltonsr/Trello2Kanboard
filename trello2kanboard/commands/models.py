@@ -37,8 +37,9 @@ class Task:
 
 
 class Subtask:
-    def __init__(self, content):
+    def __init__(self, content, status):
         self.content = content
+        self.status = status
 
 
 class Comment:

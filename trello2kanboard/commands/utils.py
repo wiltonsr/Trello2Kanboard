@@ -30,7 +30,16 @@ def parser_json(json_obj):
                         for cl in json_obj['checklists']:
                             if cl['idCard'] == task.trello_id:
                                 for ci in cl['checkItems']:
-                                    subtask = Subtask(content=ci['name'])
+                                    if ci['state'] == 'incomplete':
+                                        # Kanboard incomplete status value
+                                        status = 0
+                                    elif ci['state'] == 'complete':
+                                        # Kanboard complete status value
+                                        status = 2
+                                    else:
+                                        status = 0
+                                    subtask = Subtask(content=ci['name'],
+                                                      status=status)
                                     task.subtasks.append(subtask)
                         for a in json_obj['actions']:
                             if a['type'] == 'commentCard':
