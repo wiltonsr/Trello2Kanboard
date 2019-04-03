@@ -45,7 +45,9 @@ class Trello2KanboardCLI(click.MultiCommand):
 
 
 def print_version(ctx, param, value):
-    with io.open('trello2kanboard/__init__.py', 'rt', encoding='utf8') as f:
+    abs_path = os.path.dirname(os.path.abspath(__file__))
+    file_to_open = os.path.join(abs_path, '__init__.py')
+    with io.open(file_to_open, 'rt', encoding='utf8') as f:
         version = re.search(r'__version__ = \'(.*?)\'', f.read()).group(1)
     if not value or ctx.resilient_parsing:
         return
