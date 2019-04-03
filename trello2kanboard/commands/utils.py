@@ -43,7 +43,7 @@ def parser_json(json_obj):
                                     task.subtasks.append(subtask)
                         for a in json_obj['actions']:
                             if a['type'] == 'commentCard':
-                                if a['data']['list']['id'] == task.trello_id:
+                                if a['data']['card']['id'] == task.trello_id:
                                     comment = Comment(
                                         content=a['data']['text'])
                                     task.comments.append(comment)
