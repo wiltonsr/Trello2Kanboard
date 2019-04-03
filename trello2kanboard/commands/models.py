@@ -20,10 +20,11 @@ class Column:
 
 class Task:
     def __init__(self, name, trello_id, trello_column_id,
-                 desc=None, comments=None, subtasks=None):
+                 date_due, desc=None, comments=None, subtasks=None):
         self.name = name
         self.trello_id = trello_id
         self.trello_column_id = trello_column_id
+        self.date_due = date_due
         if desc is None:
             desc = ''
         self.desc = desc
