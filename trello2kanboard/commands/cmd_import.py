@@ -94,6 +94,8 @@ def cli(ctx, api_url, username, api_token):
                 except Exception as e:
                     print(repr(e))
                     print('Failed on Task creation. Trying again.')
+
+            # Creating Subtask
             for subtask in task.subtasks:
                 subtask_id = False
                 while subtask_id is False:
@@ -105,6 +107,8 @@ def cli(ctx, api_url, username, api_token):
                     except Exception as e:
                         print(repr(e))
                         print('Failed on Subtask creation. Trying again.')
+
+            # Creating Comments
             for comment in task.comments:
                 comment_id = False
                 while comment_id is False:
@@ -118,3 +122,5 @@ def cli(ctx, api_url, username, api_token):
                         print('Failed on Comment creation. Trying again.')
 
         print_line()
+
+    print('Project Imported successfully.')
