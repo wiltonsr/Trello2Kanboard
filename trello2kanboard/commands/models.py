@@ -10,15 +10,36 @@ class Project:
 
 
 class Column:
-    def __init__(self, name, trello_id, cards=None):
+    def __init__(self, name, trello_id, tasks=None):
         self.name = name
         self.trello_id = trello_id
-        if cards is None:
-            cards = []
-        self.cards = cards
+        if tasks is None:
+            tasks = []
+        self.tasks = tasks
 
 
-class Card:
-    def __init__(self, name, trello_column_id):
+class Task:
+    def __init__(self, name, trello_id, trello_column_id,
+                 desc=None, comments=None, subtasks=None):
         self.name = name
+        self.trello_id = trello_id
         self.trello_column_id = trello_column_id
+        if desc is None:
+            desc = ''
+        self.desc = desc
+        if comments is None:
+            comments = []
+        self.comments = comments
+        if subtasks is None:
+            subtasks = []
+        self.subtasks = subtasks
+
+
+class Subtask:
+    def __init__(self, content):
+        self.content = content
+
+
+class Comment:
+    def __init__(self, content):
+        self.content = content

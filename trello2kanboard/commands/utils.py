@@ -3,7 +3,7 @@ import os
 import sys
 import click
 
-from .models import Project, Column, Card
+from .models import Project, Column, Task, Subtask, Comment
 
 
 def print_line(simbol='#'):
@@ -18,16 +18,30 @@ def parser_json(json_obj):
 
         for l in json_obj['lists']:
             if l['closed'] is False:
-                column = Column(l['name'], l['id'])
+                column = Column(name=l['name'], trello_id=l['id'])
                 for c in json_obj['cards']:
-                    card = Card(c['name'], c['idList'])
-                    if column.trello_id == card.trello_column_id:
-                        column.cards.append(card)
+                    task = Task(name=c['name'], trello_id=c['id'],
+                                trello_column_id=c['idList'], desc=c['desc'])
+                    if column.trello_id == task.trello_column_id:
+                        column.tasks.append(task)
+                        for cl in json_obj['checklists']:
+                            if cl['idCard'] == task.trello_id:
+                                for ci in cl['checkItems']:
+                                    subtask = Subtask(content=ci['name'])
+                                    task.subtasks.append(subtask)
+                        for a in json_obj['actions']:
+                            if a['type'] == 'commentCard':
+                                if a['data']['list']['id'] == task.trello_id:
+                                    comment = Comment(
+                                        content=a['data']['text'])
+                                    task.comments.append(comment)
                 project.columns.append(column)
 
         return project
     except Exception as e:
         print(repr(e))
         print("Invalid Trello JSON File.")
-        print("JSON File must contain keys: name, lists and cards.")
+        print(
+            "JSON File must contain this keys: "
+            "name, lists, cards, checklists and actions.")
         sys.exit()

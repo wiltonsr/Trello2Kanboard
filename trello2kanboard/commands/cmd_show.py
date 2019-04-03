@@ -17,6 +17,6 @@ def cli(ctx):
 
     for x, column in enumerate(project.columns, start=1):
         click.echo(u'Column {}: {}.'.format(x, column.name))
-        for y, card in enumerate(column.cards, start=1):
-            print(u'Card {}: {}.'.format(y, card.name))
+        for y, task in enumerate(column.tasks, start=1):
+            print(u'Task {}: {}.'.format(y, task.name))
         print_line()
