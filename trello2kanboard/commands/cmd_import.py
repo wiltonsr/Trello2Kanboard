@@ -31,7 +31,7 @@ def cli(ctx, api_url, username, api_token):
         user = kb.get_me()
     except Exception as e:
         print(repr(e))
-        print('Failed to get user: {}\nwith api token: \"{}\".'.format(
+        print(u'Failed to get user: {}\nwith api token: \"{}\".'.format(
             username, api_token))
         sys.exit()
 
@@ -41,12 +41,12 @@ def cli(ctx, api_url, username, api_token):
         try:
             project_id = kb.create_project(owner_id=user['id'],
                                            name=project.name)
-            print('Project {} successfully created.'.format(project_id))
-            print('Project name: {}.'.format(project.name))
+            print(u'Project {} successfully created.'.format(project_id))
+            print(u'Project name: {}.'.format(project.name))
             print_line()
         except Exception as e:
             print(repr(e))
-            print('Failed on Project creation. Trying again.')
+            print(u'Failed on Project creation. Trying again.')
 
     # Erasing default columns
     all_columns = False
@@ -55,16 +55,16 @@ def cli(ctx, api_url, username, api_token):
             all_columns = kb.get_columns(project_id=project_id)
         except Exception as e:
             print(repr(e))
-            print('Failed to get Projects columns. Trying again.')
+            print(u'Failed to get Projects columns. Trying again.')
     for c in all_columns:
         erased = False
         while erased is False:
             try:
                 erased = kb.remove_column(column_id=c['id'])
-                print('Default Column erased.')
+                print(u'Default Column erased.')
             except Exception as e:
                 print(repr(e))
-                print('Failed to erase default Column. Trying again.')
+                print(u'Failed to erase default Column. Trying again.')
     print_line()
 
     # Creating Columns
@@ -74,11 +74,11 @@ def cli(ctx, api_url, username, api_token):
             try:
                 column_id = kb.add_column(
                     project_id=project_id, title=column.name)
-                print('Column {} successfully created.'.format(column_id))
-                print('Column name: {}.'.format(column.name))
+                print(u'Column {} successfully created.'.format(column_id))
+                print(u'Column name: {}.'.format(column.name))
             except Exception as e:
                 print(repr(e))
-                print('Failed on Column creation. Trying again.')
+                print(u'Failed on Column creation. Trying again.')
 
         # Creating Tasks
         for task in column.tasks:
@@ -90,10 +90,10 @@ def cli(ctx, api_url, username, api_token):
                                              column_id=column_id,
                                              date_due=task.date_due,
                                              description=task.desc)
-                    print('Task {} successfully created.'.format(task_id))
+                    print(u'Task {} successfully created.'.format(task_id))
                 except Exception as e:
                     print(repr(e))
-                    print('Failed on Task creation. Trying again.')
+                    print(u'Failed on Task creation. Trying again.')
 
             # Creating Subtask
             for subtask in task.subtasks:
@@ -103,10 +103,10 @@ def cli(ctx, api_url, username, api_token):
                         subtask_id = kb.create_subtask(task_id=task_id,
                                                        title=subtask.content,
                                                        status=subtask.status)
-                        print('Subtask {} successfully created.'.format(subtask_id))
+                        print(u'Subtask {} successfully created.'.format(subtask_id))
                     except Exception as e:
                         print(repr(e))
-                        print('Failed on Subtask creation. Trying again.')
+                        print(u'Failed on Subtask creation. Trying again.')
 
             # Creating Comments
             for comment in task.comments:
@@ -116,11 +116,11 @@ def cli(ctx, api_url, username, api_token):
                         comment_id = kb.create_comment(task_id=task_id,
                                                        content=comment.content,
                                                        user_id=user['id'])
-                        print('Comment {} successfully created.'.format(comment_id))
+                        print(u'Comment {} successfully created.'.format(comment_id))
                     except Exception as e:
                         print(repr(e))
-                        print('Failed on Comment creation. Trying again.')
+                        print(u'Failed on Comment creation. Trying again.')
 
         print_line()
 
-    print('Project Imported successfully.')
+    print(u'Project Imported successfully.')

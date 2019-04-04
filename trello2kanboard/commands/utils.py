@@ -52,10 +52,10 @@ def parser_json(json_obj):
         return project
     except Exception as e:
         print(repr(e))
-        print("Invalid Trello JSON File.")
+        print(u'Invalid Trello JSON File.')
         print(
-            "JSON File must contain this keys: "
-            "name, lists, cards, checklists and actions.")
+            u'JSON File must contain this keys: '
+            'name, lists, cards, checklists and actions.')
         sys.exit()
 
 

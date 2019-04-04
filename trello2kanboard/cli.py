@@ -73,7 +73,7 @@ def cli(ctx, json_file):
         ctx.json_file = obj_json
     except Exception as e:
         print(repr(e))
-        print("Invalid JSON File.")
+        print(u'Invalid JSON File.')
         sys.exit()
     """Simple Python Package for Importing Trello Projects from
     JSON Files Using the Kanboard API."""
