@@ -20,6 +20,7 @@ setup(
     author_email='wiltonsr94@gmail.com',
     description='Simple Python Package for Importing Trello Projects from JSON Files Using the Kanboard API.',
     long_description=readme,
+    long_description_content_type='text/markdown',
     packages=['trello2kanboard', 'trello2kanboard.commands'],
     include_package_data=True,
     install_requires=[
