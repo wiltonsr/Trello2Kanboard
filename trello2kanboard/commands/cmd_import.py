@@ -8,32 +8,63 @@ from trello2kanboard.cli import pass_context
 from .utils import print_line, parser_json
 
 
+class InvalidUsername(Exception):
+    pass
+
+
 @click.command('import', short_help='Import Trello project.')
 @click.option('--api-url', '-a',
               default='http://localhost/jsonrpc.php',
               help='URL address of the Kanboard API.',
               show_default=True)
-@click.option('--username', '-u',
+@click.option('--project-owner', '-o',
+              default=None,
+              help='Username that will be the owner of the project.')
+@click.option('--api-user', '-u',
               default='jsonrpc',
               help='Username from Kanboard API.',
               show_default=True)
 @click.option('--api-token', '-t', required=True,
               help='Token from Kanboard API.')
 @pass_context
-def cli(ctx, api_url, username, api_token):
+def cli(ctx, api_url, api_user, api_token, project_owner):
     """Record project info from JSON file on Kanboard."""
     project = parser_json(ctx.json_file)
 
-    kb = Kanboard(api_url, username, api_token)
+    kb = Kanboard(api_url, api_user, api_token)
 
     # Validating url, username and api_token provided.
-    try:
-        user = kb.get_me()
-    except Exception as e:
-        print(repr(e))
-        print(u'Failed to get user: {}\nwith api token: \"{}\".'.format(
-            username, api_token))
-        sys.exit()
+    user = None
+    if api_user == 'jsonrpc':
+        if project_owner is None:
+            print(u'You must inform the Project Owner.')
+            sys.exit()
+        try:
+            user = kb.get_user_by_name(username=project_owner)
+            if user is not None:
+                print(u'User {} - {} successfully connected.'.format(
+                    user['username'], user['name']))
+                print_line()
+            else:
+                raise InvalidUsername
+        except InvalidUsername:
+            print(u'Failed to get username: {}\nWith API user: {}\nAnd API token: \"{}\"\nOn address: {}.'.format(
+                project_owner, api_user, api_token, api_url))
+            sys.exit()
+        except Exception as e:
+            print(repr(e))
+            sys.exit()
+    else:
+        try:
+            user = kb.get_me()
+            print(u'User {} - {} successfully connected.'.format(
+                user['username'], user['name']))
+            print_line()
+        except Exception as e:
+            print(repr(e))
+            print(u'Failed to get user: {}\nWith api token: \"{}\"\nOn address: {}.'.format(
+                api_user, api_token, api_url))
+            sys.exit()
 
     # Creating project
     project_id = False
@@ -47,6 +78,17 @@ def cli(ctx, api_url, username, api_token):
         except Exception as e:
             print(repr(e))
             print(u'Failed on Project creation. Trying again.')
+
+    # Adding user to project when using the jsonrpc API user
+    if api_user == 'jsonrpc':
+        user_added = False
+        while user_added is False:
+            user_added = kb.add_project_user(project_id=project_id,
+                                             user_id=user['id'],
+                                             role='project-manager')
+            print(u'User {} successfully added to Project {}.'.format(
+                user['username'], project_id))
+            print_line()
 
     # Erasing default columns
     all_columns = False

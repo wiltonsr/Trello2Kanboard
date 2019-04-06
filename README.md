@@ -23,13 +23,21 @@ Step 1: Access your Trello account and export your Trello Project to JSON:
 
 Step 2: Access your Kanboard account and get/generate an API Token:
 
-Step 3: Run application:
+Step 3.1: Run application using the special user `jsonrpc` credentials:
 
     trello2kanboard --json-file /file/trello.json import \
-    --api-url http://localhost/jsonrpc.php \
-    --username jsonrpc \
-    --api-token 2d29863e6828bba14934bac97873c6859c52b1dcac1698c0a4bc3c70366a
-    
+      --api-url http://localhost/jsonrpc.php \
+      --api-user jsonrpc \
+      --api-token api-token-from-jsonrpc-kanboard-user \
+      --project-owner kanboard-username
+
+Step 3.2: Or just run using you own user credentials:
+
+    trello2kanboard --json-file /file/trello.json import \
+      --api-url http://localhost/jsonrpc.php \
+      --api-user your-username \
+      --api-token api-token-from-your-own-kanboard-user
+
 You could also show information without Import
 ----------------
 ```bash
