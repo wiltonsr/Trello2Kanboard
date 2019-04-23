@@ -5,7 +5,7 @@ import click
 
 import dateutil.parser as parser
 
-from .models import Project, Column, Task, Subtask, Comment
+from .models import Project, Column, Task, Subtask, Comment, Attachment
 
 
 def print_line(simbol='#'):
@@ -47,6 +47,12 @@ def parser_json(json_obj):
                                     comment = Comment(
                                         content=a['data']['text'])
                                     task.comments.append(comment)
+                        for at in c['attachments']:
+                            if at['isUpload'] is True:
+                                attachment = Attachment(
+                                    filename=at['name'],
+                                    url=at['url'])
+                                task.attachments.append(attachment)
                 project.columns.append(column)
 
         return project
