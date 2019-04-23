@@ -29,6 +29,7 @@ def cli(ctx):
     total_tasks = 0
     total_subtasks = 0
     total_comments = 0
+    total_attachments = 0
 
     if total_columns >= 1:
         for c in project.columns:
@@ -36,8 +37,10 @@ def cli(ctx):
             for t in c.tasks:
                 total_subtasks += len(t.subtasks)
                 total_comments += len(t.comments)
+                total_attachments += len(t.attachments)
 
     click.echo(u'{} Columns Found.'.format(total_columns))
     click.echo(u'{} Tasks Found.'.format(total_tasks))
     click.echo(u'{} Subtask Found.'.format(total_subtasks))
     click.echo(u'{} Comments Found.'.format(total_comments))
+    click.echo(u'{} Attachments Found.'.format(total_attachments))

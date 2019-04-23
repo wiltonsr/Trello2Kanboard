@@ -174,14 +174,17 @@ def cli(ctx, api_url, api_user, api_token, project_owner):
                 attachment_id = False
                 while attachment_id is False:
                     try:
-                        req = urllib.request.Request(url=attachment.url, headers=headers)
-                        filedata = base64.b64encode(urllib.request.urlopen(req).read()).decode('ascii')
+                        req = urllib.request.Request(
+                            url=attachment.url, headers=headers)
+                        filedata = base64.b64encode(
+                            urllib.request.urlopen(req).read()).decode('ascii')
                         print(type(filedata))
                         attachment_id = kb.create_task_file(project_id=project_id,
                                                             task_id=task_id,
                                                             filename=attachment.filename,
                                                             blob=filedata)
-                        print(u'Attachment {} successfully created.'.format(attachment_id))
+                        print(u'Attachment {} successfully created.'.format(
+                            attachment_id))
                     except Exception as e:
                         print(repr(e))
                         print(u'Failed on Attachment creation. Trying again.')
