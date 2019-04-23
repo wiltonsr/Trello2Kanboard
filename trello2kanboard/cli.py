@@ -66,7 +66,7 @@ def cli(ctx, json_file):
     json_str = None
 
     with json_file as f:
-        json_str = f.read()
+        json_str = f.read().decode('UTF-8')
 
     try:
         obj_json = json.loads(json_str)
