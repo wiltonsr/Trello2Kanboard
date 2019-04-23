@@ -20,7 +20,8 @@ class Column:
 
 class Task:
     def __init__(self, name, trello_id, trello_column_id,
-                 date_due, desc=None, comments=None, subtasks=None):
+                 date_due, desc=None, comments=None, subtasks=None,
+                 attachments=None):
         self.name = name
         self.trello_id = trello_id
         self.trello_column_id = trello_column_id
@@ -34,6 +35,9 @@ class Task:
         if subtasks is None:
             subtasks = []
         self.subtasks = subtasks
+        if attachments is None:
+            attachments = []
+        self.attachments = attachments
 
 
 class Subtask:
@@ -45,3 +49,9 @@ class Subtask:
 class Comment:
     def __init__(self, content):
         self.content = content
+
+
+class Attachment:
+    def __init__(self, filename, url):
+        self.filename = filename
+        self.url = url

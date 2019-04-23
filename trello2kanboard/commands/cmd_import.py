@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import click
 import sys
+import base64
+
+from six.moves import urllib
 
 from kanboard import Kanboard
 
@@ -30,6 +33,9 @@ class InvalidUsername(Exception):
 def cli(ctx, api_url, api_user, api_token, project_owner):
     """Record project info from JSON file on Kanboard."""
     project = parser_json(ctx.json_file)
+
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
     kb = Kanboard(api_url, api_user, api_token)
 
@@ -162,6 +168,26 @@ def cli(ctx, api_url, api_user, api_token, project_owner):
                     except Exception as e:
                         print(repr(e))
                         print(u'Failed on Comment creation. Trying again.')
+
+            # Creating Attachments
+            for attachment in task.attachments:
+                attachment_id = False
+                while attachment_id is False:
+                    try:
+                        req = urllib.request.Request(
+                            url=attachment.url, headers=headers)
+                        filedata = base64.b64encode(
+                            urllib.request.urlopen(req).read()).decode('ascii')
+                        print(type(filedata))
+                        attachment_id = kb.create_task_file(project_id=project_id,
+                                                            task_id=task_id,
+                                                            filename=attachment.filename,
+                                                            blob=filedata)
+                        print(u'Attachment {} successfully created.'.format(
+                            attachment_id))
+                    except Exception as e:
+                        print(repr(e))
+                        print(u'Failed on Attachment creation. Trying again.')
 
         print_line()
 
