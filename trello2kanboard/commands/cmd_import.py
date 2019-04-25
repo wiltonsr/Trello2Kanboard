@@ -178,7 +178,6 @@ def cli(ctx, api_url, api_user, api_token, project_owner):
                             url=attachment.url, headers=headers)
                         filedata = base64.b64encode(
                             urllib.request.urlopen(req).read()).decode('ascii')
-                        print(type(filedata))
                         attachment_id = kb.create_task_file(project_id=project_id,
                                                             task_id=task_id,
                                                             filename=attachment.filename,
