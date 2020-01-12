@@ -5,7 +5,7 @@ import base64
 
 from six.moves import urllib
 
-from kanboard import Kanboard
+import kanboard
 
 from trello2kanboard.cli import pass_context
 from .utils import print_line, parser_json
@@ -37,7 +37,7 @@ def cli(ctx, api_url, api_user, api_token, project_owner):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'}
 
-    kb = Kanboard(api_url, api_user, api_token)
+    kb = kanboard.Client(api_url, api_user, api_token)
 
     # Validating url, username and api_token provided.
     user = None
