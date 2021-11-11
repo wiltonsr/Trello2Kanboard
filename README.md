@@ -1,3 +1,9 @@
+
+Discontinued
+============
+
+This project has been discontinued in favor of [TrelloJSON2Kanboard](https://github.com/wiltonsr/TrelloJSON2Kanboard)
+
 Trello2Kanboard
 ============
 
